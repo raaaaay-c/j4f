@@ -21,14 +21,33 @@
 <h1>My First Google Map</h1>
 
 <div id="googleMap" style="width:100%;height:400px;"></div>
-<input
+
 <script>
     function myMap() {
+        var london = new google.maps.LatLng(51.508742,-0.120850);
         var mapProp= {
-            center:new google.maps.LatLng(51.508742,-0.120850),
+            center:london,
             zoom:5,
         };
         var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        var marker = new google.maps.Marker({
+            position:london,
+
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content:"This is London!"
+        });
+
+
+
+        marker.setMap(map);
+        google.maps.event.addListener(marker,'click',function() {
+            infowindow.open(map,marker);
+            var pos = map.getZoom();
+            map.setZoom(9);
+            map.setCenter(marker.getPosition());
+            window.setTimeout(function() {map.setZoom(pos);},3000);
+        });
     }
 </script>
 
